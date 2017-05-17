@@ -40,4 +40,6 @@ dependencies {
     compile project(":Gpu-Image")
     compile project(":ImageViewTouch")
     compile 'de.greenrobot:eventbus:2.4.0'
+
+    compile 'com.google.android.gms:play-services-vision:9.4.0'
 }

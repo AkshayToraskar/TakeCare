@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         initView();
 
-        //如果没有照片则打开相机
+        //If there is no photo, turn on the camera
         String str = DataUtils.getStringPreferences(App.getApp(), AppConstants.FEED_INFO);
         if (StringUtils.isNotEmpty(str)) {
             feedList = JSON.parseArray(str, FeedItem.class);
@@ -125,7 +125,7 @@ public class MainActivity extends BaseActivity {
     }
 
 
-    //照片适配器
+    //Photo adapter
     public class PictureAdapter extends RecyclerView.Adapter<ViewHolder> {
 
         private List<FeedItem> items = new ArrayList<FeedItem>();
@@ -159,7 +159,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onViewRecycled(ViewHolder holder) {
-            // 将标签移除,避免回收使用时标签重复
+            // Remove the label to avoid recycling when using labels
             holder.pictureLayout.removeViews(1, holder.pictureLayout.getChildCount() - 1);
             super.onViewRecycled(holder);
         }
@@ -167,7 +167,8 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onViewAttachedToWindow(ViewHolder holder) {
             super.onViewAttachedToWindow(holder);
-            // 这里可能有问题 延迟200毫秒加载是为了等pictureLayout已经在屏幕上显示getWidth才为具体的值
+            // Here there may be a problem delay of 200 milliseconds to
+            // load is for the sake of pictureLayout has been shown on the screen getWidth for the specific value
             holder.pictureLayout.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {

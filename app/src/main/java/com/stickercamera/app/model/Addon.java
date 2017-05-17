@@ -7,7 +7,7 @@ import java.util.List;
 
 
 /**
- * 本地简单使用,实际项目中与贴纸相关的属性可以添加到此类中
+ * Local simple use, the actual project with the sticker-related attributes can be added to this category
  */
 public class Addon  {
     private int    id;

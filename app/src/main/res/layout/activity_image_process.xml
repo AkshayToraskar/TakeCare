@@ -28,11 +28,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
+            <!--<com.face_detection.FaceView
+                android:id="@+id/faceView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />-->
+
             <jp.co.cyberagent.android.gpuimage.GPUImageView
                 android:id="@+id/gpuimage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
+
+
         </RelativeLayout>
 
         <LinearLayout
