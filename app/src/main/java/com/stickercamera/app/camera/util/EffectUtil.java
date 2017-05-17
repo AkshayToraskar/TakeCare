@@ -38,11 +38,11 @@ public class EffectUtil {
         //addonList.add(new Addon(R.drawable.sticker1));
         //addonList.add(new Addon(R.drawable.sticker2));
         //addonList.add(new Addon(R.drawable.sticker3));
-        addonList.add(new Addon(R.drawable.str1));
-        addonList.add(new Addon(R.drawable.str2));
-        addonList.add(new Addon(R.drawable.str3));
-        addonList.add(new Addon(R.drawable.str4));
-        addonList.add(new Addon(R.drawable.str5));
+        addonList.add(new Addon(R.drawable.ic_str1));
+        addonList.add(new Addon(R.drawable.ic_str2));
+        addonList.add(new Addon(R.drawable.ic_str3));
+        addonList.add(new Addon(R.drawable.ic_str4));
+        addonList.add(new Addon(R.drawable.ic_str5));
     }
 
     public static void clear() {

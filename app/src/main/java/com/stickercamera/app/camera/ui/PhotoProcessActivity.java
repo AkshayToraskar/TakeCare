@@ -81,10 +81,10 @@ public class PhotoProcessActivity extends CameraBaseActivity {
     //Bottom button
     //@InjectView(R.id.sticker_btn)
     //TextView stickerBtn;
-   // @InjectView(R.id.filter_btn)
-  //  TextView filterBtn;
-  //  @InjectView(R.id.text_btn)
-  //  TextView labelBtn;
+    // @InjectView(R.id.filter_btn)
+    //  TextView filterBtn;
+    //  @InjectView(R.id.text_btn)
+    //  TextView labelBtn;
     //Tool area
     @InjectView(R.id.list_tools)
     HListView bottomToolBar;
@@ -103,7 +103,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
     private LabelView emptyLabelView;
 
     private List<LabelView> labels = new ArrayList<LabelView>();
-    ProgressDialog pd;
+    //ProgressDialog pd;
     //Label area
     private View commonLabelArea;
 
@@ -120,16 +120,17 @@ public class PhotoProcessActivity extends CameraBaseActivity {
         initEvent();
         initStickerToolBar();
 
+        showProgressDialog("Processing Image");
+        // pd.setTitle("Precessing Images");
+        // pd.setMessage("detecting faces");
+        //  pd.show();
+
         ImageUtils.asyncLoadImage(this, getIntent().getData(), new ImageUtils.LoadImageCallback() {
             @Override
             public void callback(Bitmap result) {
                 currentBitmap = result;
                 mGPUImageView.setImage(currentBitmap);
 
-                pd=new ProgressDialog(PhotoProcessActivity.this);
-                pd.setTitle("Precessing Images");
-                pd.setMessage("detecting faces");
-                pd.show();
 
                 detectFace(currentBitmap);
             }
@@ -143,6 +144,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
         });
 
     }
+
     private void initView() {
         //Add a sticker to the watermark
         View overlay = LayoutInflater.from(PhotoProcessActivity.this).inflate(
@@ -173,7 +175,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
 
         //Initialize the recommended tab bar
         commonLabelArea = LayoutInflater.from(PhotoProcessActivity.this).inflate(
-                R.layout.view_label_bottom,null);
+                R.layout.view_label_bottom, null);
         commonLabelArea.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
         toolArea.addView(commonLabelArea);
@@ -241,7 +243,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
     }
 
     //Save the picture
-    private void savePicture(){
+    private void savePicture() {
         //Plus filter
         final Bitmap newBitmap = Bitmap.createBitmap(mImageView.getWidth(), mImageView.getHeight(),
                 Bitmap.Config.ARGB_8888);
@@ -259,8 +261,9 @@ public class PhotoProcessActivity extends CameraBaseActivity {
         new SavePicToFileTask().execute(newBitmap);
     }
 
-    private class SavePicToFileTask extends AsyncTask<Bitmap,Void,String>{
+    private class SavePicToFileTask extends AsyncTask<Bitmap, Void, String> {
         Bitmap bitmap;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -274,7 +277,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                 bitmap = params[0];
 
                 String picName = TimeUtils.dtFormat(new Date(), "yyyyMMddHHmmss");
-                 fileName = ImageUtils.saveToFile(FileUtils.getInst().getPhotoSavedPath() + "/"+ picName, false, bitmap);
+                fileName = ImageUtils.saveToFile(FileUtils.getInst().getPhotoSavedPath() + "/" + picName, false, bitmap);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -299,20 +302,20 @@ public class PhotoProcessActivity extends CameraBaseActivity {
             }
 
             //Send the image information to MainActivity via EventBus
-            FeedItem feedItem = new FeedItem(tagInfoList,fileName);
+            FeedItem feedItem = new FeedItem(tagInfoList, fileName);
             EventBus.getDefault().post(feedItem);
             CameraManager.getInst().close();
         }
     }
 
 
-    public void tagClick(View v){
-        TextView textView = (TextView)v;
-        TagItem tagItem = new TagItem(AppConstants.POST_TYPE_TAG,textView.getText().toString());
+    public void tagClick(View v) {
+        TextView textView = (TextView) v;
+        TagItem tagItem = new TagItem(AppConstants.POST_TYPE_TAG, textView.getText().toString());
         addLabel(tagItem);
     }
 
-    private MyImageViewDrawableOverlay.OnDrawableEventListener wpEditListener   = new MyImageViewDrawableOverlay.OnDrawableEventListener() {
+    private MyImageViewDrawableOverlay.OnDrawableEventListener wpEditListener = new MyImageViewDrawableOverlay.OnDrawableEventListener() {
         @Override
         public void onMove(MyHighlightView view) {
         }
@@ -362,7 +365,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
 
 
     //Initialize the map
-    private void initStickerToolBar(){
+    private void initStickerToolBar() {
 
         bottomToolBar.setAdapter(new StickerToolAdapter(PhotoProcessActivity.this, EffectUtil.addonList));
         bottomToolBar.setOnItemClickListener(new it.sephiroth.android.library.widget.AdapterView.OnItemClickListener() {
@@ -381,14 +384,14 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                         });
             }
         });
-       // setCurrentBtn(stickerBtn);
+        // setCurrentBtn(stickerBtn);
     }
 
 
     //Initialize the filter
-    private void initFilterToolBar(){
+    private void initFilterToolBar() {
         final List<FilterEffect> filters = EffectService.getInst().getLocalFilters();
-        final FilterAdapter adapter = new FilterAdapter(PhotoProcessActivity.this, filters,smallImageBackgroud);
+        final FilterAdapter adapter = new FilterAdapter(PhotoProcessActivity.this, filters, smallImageBackgroud);
         bottomToolBar.setAdapter(adapter);
         bottomToolBar.setOnItemClickListener(new it.sephiroth.android.library.widget.AdapterView.OnItemClickListener() {
             @Override
@@ -433,24 +436,23 @@ public class PhotoProcessActivity extends CameraBaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         labelSelector.hide();
         super.onActivityResult(requestCode, resultCode, data);
-        if (AppConstants.ACTION_EDIT_LABEL== requestCode && data != null) {
+        if (AppConstants.ACTION_EDIT_LABEL == requestCode && data != null) {
             String text = data.getStringExtra(AppConstants.PARAM_EDIT_TEXT);
-            if(StringUtils.isNotEmpty(text)){
-                TagItem tagItem = new TagItem(AppConstants.POST_TYPE_TAG,text);
+            if (StringUtils.isNotEmpty(text)) {
+                TagItem tagItem = new TagItem(AppConstants.POST_TYPE_TAG, text);
                 addLabel(tagItem);
             }
-        }else if(AppConstants.ACTION_EDIT_LABEL_POI== requestCode && data != null){
+        } else if (AppConstants.ACTION_EDIT_LABEL_POI == requestCode && data != null) {
             String text = data.getStringExtra(AppConstants.PARAM_EDIT_TEXT);
-            if(StringUtils.isNotEmpty(text)){
-                TagItem tagItem = new TagItem(AppConstants.POST_TYPE_POI,text);
+            if (StringUtils.isNotEmpty(text)) {
+                TagItem tagItem = new TagItem(AppConstants.POST_TYPE_POI, text);
                 addLabel(tagItem);
             }
         }
     }
 
 
-    public void detectFace(Bitmap bitmap){
-
+    public void detectFace(Bitmap bitmap) {
 
 
         // A new face detector is created for detecting the face and its landmarks.
@@ -497,6 +499,8 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                 Toast.makeText(this, R.string.low_storage_error, Toast.LENGTH_LONG).show();
                 Log.w(TAG, getString(R.string.low_storage_error));
             }
+
+            dismissProgressDialog();
         }
 
         /*FaceView overlay = (FaceView) findViewById(R.id.faceView);
@@ -504,10 +508,6 @@ public class PhotoProcessActivity extends CameraBaseActivity {
 
 
         drawFaceAnnotations(faces);
-
-
-
-
 
 
         // Although detector may be used multiple times for different images, it should be released
@@ -530,53 +530,57 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                 int cy = (int) (landmark.getPosition().y * scale);
                 canvas.drawCircle(cx, cy, 10, paint);*/
                 Addon sticker = null;
-               switch (landmark.getType())
-               {
-                   case 0://bottom mouth
-                       sticker = EffectUtil.addonList.get(1);
-                       break;
+                switch (landmark.getType()) {
+                    case 0://bottom mouth
+                        sticker = EffectUtil.addonList.get(1);
+                        break;
 
-                   case 4://left eye
-                       sticker = new Addon(R.drawable.eye);
-                       break;
+                    case 4://left eye
+                          sticker = new Addon(R.drawable.ic_eye);
+                        break;
 
-                   case 5://left mouth
-                     //  sticker =new Addon(R.drawable.mark);
-                       break;
+                    case 5://left mouth
+                        //  sticker =new Addon(R.drawable.mark);
+                        break;
 
-                   case 6://nose base
-                     //  sticker = new Addon(R.drawable.mark);
-                       break;
+                    case 6://nose base
+                        //  sticker = new Addon(R.drawable.mark);
+                        break;
 
-                   case 10://right eye
-                       sticker = new Addon(R.drawable.eye);
-                       break;
+                    case 10://right eye
+                           sticker = new Addon(R.drawable.ic_eye);
+                        break;
 
-                   case 11://right mouth
-                       //sticker = new Addon(R.drawable.mark);
-                    //   sticker = EffectUtil.addonList.get(4);
+                    case 11://right mouth
+                        //sticker = new Addon(R.drawable.mark);
+                        //   sticker = EffectUtil.addonList.get(4);
 
-                       break;
+                        break;
+
+                    case 7://right chick
+                      // sticker = EffectUtil.addonList.get(4);
+                        break;
 
 
-                   default:
-                      // sticker = new Addon(R.drawable.mark);
-                       break;
-               }
+                    default:
+                        // sticker = new Addon(R.drawable.mark);
+                        break;
+                }
 
-               if(sticker!=null) {
-                   EffectUtil.addStickerImageAuto(mImageView, PhotoProcessActivity.this, sticker,
-                           new EffectUtil.StickerCallback() {
-                               @Override
-                               public void onRemoveSticker(Addon sticker) {
-                                   labelSelector.hide();
-                               }
-                           }, (int) landmark.getPosition().x, (int) landmark.getPosition().y);
-               }
+                if (sticker != null) {
+                    EffectUtil.addStickerImageAuto(mImageView, PhotoProcessActivity.this, sticker,
+                            new EffectUtil.StickerCallback() {
+                                @Override
+                                public void onRemoveSticker(Addon sticker) {
+                                    labelSelector.hide();
+                                }
+                            }, (int) landmark.getPosition().x, (int) landmark.getPosition().y);
+                }
             }
         }
 
-        pd.dismiss();
+        //  pd.dismiss();
+        dismissProgressDialog();
 
     }
 
