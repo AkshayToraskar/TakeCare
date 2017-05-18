@@ -536,7 +536,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                         break;
 
                     case 4://left eye
-                          sticker = new Addon(R.drawable.ic_eye);
+                        //  sticker = new Addon(R.drawable.eye);
                         break;
 
                     case 5://left mouth
@@ -548,7 +548,7 @@ public class PhotoProcessActivity extends CameraBaseActivity {
                         break;
 
                     case 10://right eye
-                           sticker = new Addon(R.drawable.ic_eye);
+                         //  sticker = new Addon(R.drawable.eye);
                         break;
 
                     case 11://right mouth

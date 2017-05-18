@@ -168,13 +168,13 @@ public class CameraActivity extends CameraBaseActivity {
     }
 
     private void initEvent() {
-        //拍照
+        //Take pictures
         takePicture.setOnClickListener(v -> {
             try {
                 cameraInst.takePicture(null, null, new MyPictureCallback());
             } catch (Throwable t) {
                 t.printStackTrace();
-                toast("拍照失败，请重试！", Toast.LENGTH_LONG);
+                toast("Photo failed, please try again！", Toast.LENGTH_LONG);
                 try {
                     cameraInst.startPreview();
                 } catch (Throwable e) {
@@ -183,9 +183,9 @@ public class CameraActivity extends CameraBaseActivity {
             }
 
         });
-        //闪光灯
+        //flash
         flashBtn.setOnClickListener(v -> turnLight(cameraInst));
-        //前后置摄像头切换
+        //Front and rear camera switching
         boolean canSwitch = false;
         try {
             canSwitch = mCameraHelper.hasFrontCamera() && mCameraHelper.hasBackCamera();

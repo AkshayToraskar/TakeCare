@@ -1,11 +1,16 @@
 package com.customview;
 
 import android.content.Context;
+
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+
+import com.github.skykai.stickercamera.R;
 
 /**
  * 照相机井字线
@@ -33,20 +38,25 @@ public class CameraGrid extends View {
     }
 
 
-    //画一个井字,上下画两条灰边，中间为正方形
+    //Draw a word, draw two gray side, the middle of the square
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         int width = this.getWidth();
         int height = this.getHeight();
         if (width < height) {
+
             topBannerWidth = height - width;
         }
         if (showGrid) {
-            canvas.drawLine(width / 3, 0, width / 3, height, mPaint);
-            canvas.drawLine(width * 2 / 3, 0, width * 2 / 3, height, mPaint);
-            canvas.drawLine(0, height / 3, width, height / 3, mPaint);
-            canvas.drawLine(0, height * 2 / 3, width, height * 2 / 3, mPaint);
+            Bitmap bit= BitmapFactory.decodeResource(getResources(), R.drawable.face_outline1);
+
+            canvas.drawBitmap(bit,(float) (width / 3),(float) (height / 3),mPaint);
+
+           // canvas.drawLine(width / 3, 0, width / 3, height, mPaint);
+          //  canvas.drawLine(width * 2 / 3, 0, width * 2 / 3, height, mPaint);
+          //  canvas.drawLine(0, height / 3, width, height / 3, mPaint);
+          //  canvas.drawLine(0, height * 2 / 3, width, height * 2 / 3, mPaint);
         }
     }
 
