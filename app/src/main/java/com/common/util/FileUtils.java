@@ -28,8 +28,8 @@ import java.util.List;
 
 public class FileUtils {
 
-    private static String    BASE_PATH;
-    private static String    STICKER_BASE_PATH;
+    private static String BASE_PATH;
+    private static String STICKER_BASE_PATH;
 
     private static FileUtils mInstance;
 
@@ -49,9 +49,9 @@ public class FileUtils {
     }
 
     /**
-     * 获取文件夹大小
-     * @param file File实例
-     * @return long 单位为K
+     * Get the folder size
+     * @param file File instance
+     * @return long unit is K
      * @throws Exception
      */
     public long getFolderSize(File file) {
@@ -85,7 +85,8 @@ public class FileUtils {
         String md5Str = MD5Util.getMD5(imageUrl).replace("-", "mm");
         return getBasePath(packageId) + md5Str;
     }
-    //读取assets文件
+
+    //Read the assets file
     public String readFromAsset(String fileName) {
         InputStream is = null;
         BufferedReader br = null;
@@ -150,10 +151,10 @@ public class FileUtils {
 
     private FileUtils() {
         String sdcardState = Environment.getExternalStorageState();
-        //如果没SD卡则放缓存
+        //If no SD card is put cache
         if (Environment.MEDIA_MOUNTED.equals(sdcardState)) {
             BASE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath()
-                        + "/stickercamera/";
+                    + "/stickercamera/";
         } else {
             BASE_PATH = App.getApp().getCacheDirPath();
         }
@@ -214,7 +215,7 @@ public class FileUtils {
         return sb.toString();
     }
 
-    //都是相对路径，一一对应
+    //Are relative to the path, one by one correspondence
     public boolean copyAssetDirToFiles(Context context, String dirname) {
         try {
             AssetManager assetManager = context.getAssets();
@@ -234,7 +235,7 @@ public class FileUtils {
         }
     }
 
-    //都是相对路径，一一对应
+    //Are relative to the path, one by one correspondence
     public boolean copyAssetFileToFiles(Context context, String filename) {
         return copyAssetFileToFiles(context, filename, getExtFile("/" + filename));
     }
@@ -269,8 +270,8 @@ public class FileUtils {
         return of.exists() && !nf.exists() && of.renameTo(nf);
     }
 
-    /**  
-     * 复制单个文件  
+    /**
+     * Copy a single file
      */
     public void copyFile(String oldPath, String newPath) {
         InputStream inStream = null;
@@ -279,18 +280,18 @@ public class FileUtils {
             int bytesum = 0;
             int byteread = 0;
             File oldfile = new File(oldPath);
-            if (oldfile.exists()) { //文件存在时   
-                inStream = new FileInputStream(oldPath); //读入原文件   
+            if (oldfile.exists()) { //When the file exists
+                inStream = new FileInputStream(oldPath); //Read the original file
                 fs = new FileOutputStream(newPath);
                 byte[] buffer = new byte[1444];
                 while ((byteread = inStream.read(buffer)) != -1) {
-                    bytesum += byteread; //字节数 文件大小   
+                    bytesum += byteread; //Byte number file size
                     System.out.println(bytesum);
                     fs.write(buffer, 0, byteread);
                 }
             }
         } catch (Exception e) {
-            System.out.println("复制单个文件操作出错");
+            System.out.println("Duplicate individual file operation error");
             e.printStackTrace();
         } finally {
             IOUtil.closeStream(inStream);
@@ -304,7 +305,7 @@ public class FileUtils {
     }
 
 
-    //获取path路径下的图片
+    //Get the image under path
     public ArrayList<PhotoItem> findPicsInDir(String path) {
         ArrayList<PhotoItem> photos = new ArrayList<PhotoItem>();
         File dir = new File(path);

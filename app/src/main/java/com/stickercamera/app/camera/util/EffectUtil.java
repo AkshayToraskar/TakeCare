@@ -35,14 +35,24 @@ public class EffectUtil {
     private static List<MyHighlightView> hightlistViews = new CopyOnWriteArrayList<MyHighlightView>();
 
     static {
-        //addonList.add(new Addon(R.drawable.sticker1));
-        //addonList.add(new Addon(R.drawable.sticker2));
-        //addonList.add(new Addon(R.drawable.sticker3));
-        addonList.add(new Addon(R.drawable.ic_str1));
+
+        addonList.add(new Addon(R.drawable.stickers1));
+        addonList.add(new Addon(R.drawable.stickers2));
+        addonList.add(new Addon(R.drawable.stickers3));
+        addonList.add(new Addon(R.drawable.stickers4));
+        addonList.add(new Addon(R.drawable.stickers5));
+
+        /*addonList.add(new Addon(R.drawable.sticker1));
+        addonList.add(new Addon(R.drawable.sticker2));
+        addonList.add(new Addon(R.drawable.sticker3));
+        addonList.add(new Addon(R.drawable.sticker4));
+        addonList.add(new Addon(R.drawable.sticker5));*/
+
+        /*addonList.add(new Addon(R.drawable.ic_str1));
         addonList.add(new Addon(R.drawable.ic_str2));
         addonList.add(new Addon(R.drawable.ic_str3));
         addonList.add(new Addon(R.drawable.ic_str4));
-        addonList.add(new Addon(R.drawable.ic_str5));
+        addonList.add(new Addon(R.drawable.ic_str5));*/
 
         /*addonList.add(new Addon(R.drawable.str1));
         addonList.add(new Addon(R.drawable.str2));

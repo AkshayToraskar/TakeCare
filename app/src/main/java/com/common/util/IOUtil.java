@@ -8,15 +8,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * IO工具
+ * IO tools
  */
 public class IOUtil {
     /**
-     * 把流读成字符串
-     * 
-     * @param is
-     *            输入流
-     * @return 字符串
+     * Read the stream as a string
+     * @param is Input stream
+     * @return string
      */
     public static String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -39,10 +37,8 @@ public class IOUtil {
     }
 
     /**
-     * 关闭流
-     * 
-     * @param stream
-     *            可关闭的流
+     * Close stream
+     * @param stream can close the stream
      */
     public static void closeStream(Closeable stream) {
         try {

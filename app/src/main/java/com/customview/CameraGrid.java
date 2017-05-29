@@ -49,9 +49,11 @@ public class CameraGrid extends View {
             topBannerWidth = height - width;
         }
         if (showGrid) {
-            Bitmap bit= BitmapFactory.decodeResource(getResources(), R.drawable.face_outline1);
+            Bitmap originalBitmap= BitmapFactory.decodeResource(getResources(), R.drawable.face_outline1);
 
-            canvas.drawBitmap(bit,(float) (width / 3),(float) (height / 3),mPaint);
+            Bitmap resizedBitmap = Bitmap.createScaledBitmap(
+                    originalBitmap, width/2, height/2, false);
+            canvas.drawBitmap(resizedBitmap,(float) (width / 3.5),(float) (height / 3.5),mPaint);
 
            // canvas.drawLine(width / 3, 0, width / 3, height, mPaint);
           //  canvas.drawLine(width * 2 / 3, 0, width * 2 / 3, height, mPaint);

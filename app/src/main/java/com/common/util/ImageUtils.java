@@ -34,7 +34,7 @@ import java.util.Set;
 
 
 /**
- * 图片工具类
+ * Image tool class
  */
 public class ImageUtils {
 
@@ -52,7 +52,7 @@ public class ImageUtils {
         return options.outHeight == options.outWidth;
     }
 
-    //图片是不是正方形
+    //The picture is not square
     public static boolean isSquare(Uri imageUri) {
         ContentResolver resolver = App.getApp().getContentResolver();
 
@@ -67,25 +67,25 @@ public class ImageUtils {
         return options.outHeight == options.outWidth;
     }
 
-    //保存图片文件
+    //Save the image file
     public static String saveToFile(String fileFolderStr, boolean isDir, Bitmap croppedImage) throws FileNotFoundException, IOException {
         File jpgFile;
         if (isDir) {
             File fileFolder = new File(fileFolderStr);
             Date date = new Date();
-            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); // 格式化时间
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss"); // Format time
             String filename = format.format(date) + ".jpg";
-            if (!fileFolder.exists()) { // 如果目录不存在，则创建一个名为"finger"的目录
+            if (!fileFolder.exists()) { // If the directory does not exist, create a directory called "finger"
                 FileUtils.getInst().mkdir(fileFolder);
             }
             jpgFile = new File(fileFolder, filename);
         } else {
             jpgFile = new File(fileFolderStr);
-            if (!jpgFile.getParentFile().exists()) { // 如果目录不存在，则创建一个名为"finger"的目录
+            if (!jpgFile.getParentFile().exists()) { // If the directory does not exist, create a directory called "finger"
                 FileUtils.getInst().mkdir(jpgFile.getParentFile());
             }
         }
-        FileOutputStream outputStream = new FileOutputStream(jpgFile); // 文件输出流
+        FileOutputStream outputStream = new FileOutputStream(jpgFile); // File output stream
 
         croppedImage.compress(Bitmap.CompressFormat.JPEG, 70, outputStream);
         IOUtil.closeStream(outputStream);
@@ -94,7 +94,7 @@ public class ImageUtils {
 
 
 
-    //从文件中读取Bitmap
+    //Read Bitmap from the file
     public static Bitmap decodeBitmapWithOrientation(String pathName, int width, int height) {
         return decodeBitmapWithSize(pathName, width, height, false);
     }
@@ -221,15 +221,15 @@ public class ImageUtils {
         paths.clear();
         paths.add(FileUtils.getInst().getSystemPhotoPath());
         String[] projection = { MediaStore.Images.Media._ID, MediaStore.Images.Media.DATA,
-                MediaStore.Images.Media.DATE_ADDED };//FIXME 拍照时间为新增照片时间
+                MediaStore.Images.Media.DATE_ADDED };//FIXME Take time for new photo time
         Cursor cursor = mContext.getContentResolver().query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection,//指定所要查询的字段
-                MediaStore.Images.Media.SIZE + ">?",//查询条件
-                new String[] { "100000" }, //查询条件中问号对应的值
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, projection,//Specifies the fields to be queried
+                MediaStore.Images.Media.SIZE + ">?",//Query conditions
+                new String[] { "100000" }, //The value of the question mark in the query condition
                 MediaStore.Images.Media.DATE_ADDED + " desc");
 
         cursor.moveToFirst();
-        //文件夹照片
+        //Folder photo
         Map<String, Album> galleries = new HashMap<String, Album>();
         while (cursor.moveToNext()) {
             String data = cursor.getString(1);
@@ -247,11 +247,11 @@ public class ImageUtils {
 
             galleries.get(sub).getPhotos().add(new PhotoItem(data, (long) (cursor.getInt(2)) * 1000));
         }
-        //系统相机照片
+        //System camera photos
         ArrayList<PhotoItem> sysPhotos = FileUtils.getInst().findPicsInDir(
                 FileUtils.getInst().getSystemPhotoPath());
         if (!sysPhotos.isEmpty()) {
-            galleries.put(FileUtils.getInst().getSystemPhotoPath(), new Album("胶卷相册", FileUtils
+            galleries.put(FileUtils.getInst().getSystemPhotoPath(), new Album("Film album", FileUtils
                     .getInst().getSystemPhotoPath(), sysPhotos));
         } else {
             galleries.remove(FileUtils.getInst().getSystemPhotoPath());
@@ -262,7 +262,7 @@ public class ImageUtils {
 
 
 
-    //异步加载图片
+    //Asynchronous loading of images
     public static interface LoadImageCallback {
         public void callback(Bitmap result);
     }
@@ -306,7 +306,7 @@ public class ImageUtils {
         }
     }
 
-    //异步加载缩略图
+    //Asynchronous loading thumbnails
     public static void asyncLoadSmallImage(Context context, Uri imageUri, LoadImageCallback callback) {
         new LoadSmallPicTask(context, imageUri, callback).execute();
     }
@@ -336,7 +336,7 @@ public class ImageUtils {
 
     }
 
-    //得到指定大小的Bitmap对象
+    //Get the specified size of the Bitmap object
     public static Bitmap getResizedBitmap(Context context, Uri imageUri, int width, int height) {
         InputStream inputStream = null;
         try {
